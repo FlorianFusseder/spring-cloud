@@ -1,0 +1,35 @@
+version: '3'
+services:
+  eureka:
+    build:
+      context: ./spring-service-discovery
+      dockerfile: Dockerfile
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+  admin:
+    build:
+      context: ./spring-admin-server
+      dockerfile: Dockerfile
+    depends_on:
+      - eureka
+    container_name: admin
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+    ports:
+      - "8080:8080"
+
+  spring:
+    build:
+      context: ./spring-web-request
+      dockerfile: Dockerfile
+    container_name: web-request
+    depends_on:
+      - eureka
+      - admin
+    ports:
+      - "8081:8081"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://admin:8080
