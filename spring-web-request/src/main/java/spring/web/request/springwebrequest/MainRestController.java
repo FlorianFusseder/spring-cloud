@@ -1,4 +1,4 @@
-package springbootdemo.springbootdemo;
+package spring.web.request.springwebrequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;

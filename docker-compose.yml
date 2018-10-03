@@ -20,7 +20,21 @@ services:
     ports:
       - "8080:8080"
 
-  spring:
+  webresponse:
+    build:
+      context: ./spring-web-response
+      dockerfile: Dockerfile
+    container_name: web-response
+    depends_on:
+      - eureka
+      - admin
+    ports:
+      - "8082:8082"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://admin:8080
+
+  webrequest:
     build:
       context: ./spring-web-request
       dockerfile: Dockerfile
@@ -28,8 +42,10 @@ services:
     depends_on:
       - eureka
       - admin
+      - webresponse
     ports:
       - "8081:8081"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
       SPRING_BOOT_ADMIN_CLIENT_URL: http://admin:8080
+      WEB_RESPONSE_URL: http://webresponse:8082

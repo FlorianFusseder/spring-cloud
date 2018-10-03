@@ -12,6 +12,7 @@
     <modules>
         <module>spring-service-discovery</module>
         <module>spring-web-request</module>
+        <module>spring-web-response</module>
         <module>spring-admin-server</module>
     </modules>
 
