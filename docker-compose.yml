@@ -4,6 +4,7 @@ services:
     build:
       context: ./spring-service-discovery
       dockerfile: Dockerfile
+    image: florianfusseder/spring-eureka-server
     container_name: eureka
     ports:
       - "8761:8761"
@@ -12,6 +13,7 @@ services:
     build:
       context: ./spring-admin-server
       dockerfile: Dockerfile
+    image: florianfusseder/spring-admin-server
     depends_on:
       - eureka
     container_name: admin
@@ -24,6 +26,7 @@ services:
     build:
       context: ./spring-web-response
       dockerfile: Dockerfile
+    image: florianfusseder/spring-web-request
     container_name: web-response
     depends_on:
       - eureka
@@ -38,6 +41,7 @@ services:
     build:
       context: ./spring-web-request
       dockerfile: Dockerfile
+    image: florianfusseder/spring-web-response
     container_name: web-request
     depends_on:
       - eureka
